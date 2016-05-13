@@ -43,7 +43,7 @@ Supports one category and two series object. -->
             appearance: none;
             cursor: pointer;
             background: url('dropdown_arrow.png') no-repeat right;
-            width: 150px;
+            width: 160px;
             /*Adds background-image*/
         }
         
@@ -106,14 +106,14 @@ Supports one category and two series object. -->
                             <option value="byDailySchedule">By Daily Schedule</option>
                             <option value="byWeeklySchedule">By Weekly Schedule</option>
                             <option value="byMonthlySchedule">By Monthly Schedule</option>
-                            <option value="byYearlySchedule">By Yearly Schedul</option>
+                            <option value="byYearlySchedule">By Yearly Schedule</option>
                         </select>
                     </div>
                 </div>
             </div>
         </div>
-        <div class="container">
-            <div id="pieChart" style="width: 600px; height: 400px; ">
+        <div class="container col-sm-12">
+            <div id="pieChart">
             </div>
         </div>
     </template>
@@ -143,8 +143,10 @@ Supports one category and two series object. -->
                     }
                 },
                 title: {
-                    text: ' ',
-                    align: 'left'
+                    text: '$164M <br> Total ',
+                    verticalAlign: 'middle',
+                    floating: true,
+
                 },
 
                 series: [
@@ -154,6 +156,7 @@ Supports one category and two series object. -->
 
                             distance: 60
                         },
+                        startAngle: -60,
                         groupPadding: 0,
                         name: '',
                         data: this.donutchartServiceResponse
