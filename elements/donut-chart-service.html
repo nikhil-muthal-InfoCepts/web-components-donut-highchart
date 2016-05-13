@@ -1,0 +1,45 @@
+<link rel="import" href="../bower_components/polymer/polymer.html">
+<dom-module id="donut-chart-service">
+    <template>
+        <style>
+        :host {
+            display: block;
+        }
+        </style>
+        <iron-ajax id="ajax" auto url={{url}} handle-as="json" on-response="handleResponse" last-response={{ajaxResponse}}></iron-ajax>
+    </template>
+    <script>
+    Polymer({
+        is: 'donut-chart-service',
+        properties: {
+            url: {
+                type: String,
+                notify: true
+            },
+            donutchartServiceResponse: {
+                type: Object,
+                value: function() {
+                    return {};
+                },
+                notify: true
+            },
+            url: {
+                type: String,
+                notify: true,
+                value: ''
+            }
+        },
+        handleResponse: function() {
+
+            // Capture response in a variable which is bounded to chart component
+            // Currently extraction of categories and series details from JSON object is
+            // is done in chart component itself (can be done in this component itself)
+            this.donutchartServiceResponse = this.$.ajax.lastResponse;
+            // Emmit a custom event, this event is being listened by polymer web component hosting highcharts
+            this.fire('donut-data-ready', {
+                donut: true
+            });
+        }
+    });
+    </script>
+</dom-module>

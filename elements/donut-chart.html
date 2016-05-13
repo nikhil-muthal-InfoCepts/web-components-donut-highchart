@@ -1,0 +1,173 @@
+<link rel="import" type="text/css" href="../../../bower_components/polymer/polymer.html">
+<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/css/bootstrap.min.css">
+<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/css/bootstrap-theme.min.css">
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.3/jquery.min.js"></script>
+<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/js/bootstrap.min.js"></script>
+<!-- <link rel="import" type="text/css" href="../../../bower_components/highcharts/highcharts.js"> -->
+<!-- Polymer element to fetch data from json and build a chart.
+Supports one category and two series object. -->
+<dom-module id="donut-chart">
+    <template>
+        <style>
+        #pieChart {
+            /* width: 600px;
+            height: 400px;
+            */
+            width: 100%;
+            margin: 0 auto;
+        }
+        
+        #contain-img {
+            width: 100px;
+            height: 100px;
+        }
+        
+        iron-image,
+        iron-image /deep/ img {
+            display: block;
+            width: 100%;
+        }
+        
+        select {
+            padding: 3px;
+            margin: 0;
+            -webkit-border-radius: 4px;
+            -moz-border-radius: 4px;
+            border-radius: 4px;
+            color: #888;
+            border-color: #b1b1bc;
+            outline: none;
+            display: inline-block;
+            -webkit-appearance: none;
+            -moz-appearance: none;
+            appearance: none;
+            cursor: pointer;
+            background: url('dropdown_arrow.png') no-repeat right;
+            width: 150px;
+            /*Adds background-image*/
+        }
+        
+        .rTable {
+            display: table;
+            /*  margin: 0 0 0 300px;*/
+            /*  width:600px;*/
+            width: 100%;
+        }
+        
+        .rTableRow {
+            display: table-row;
+        }
+        
+        .rTableHeading {
+            display: table-header-group;
+        }
+        
+        .rTableBody {
+            display: table-row-group;
+        }
+        
+        .rTableFoot {
+            display: table-footer-group;
+        }
+        
+        .rTableCell,
+        .rTableHead {
+            display: table-cell;
+            margin: 0 0 0 0px;
+            padding: 0 0 0 0px;
+        }
+        </style>
+        <div class="container">
+            <div class="rTable">
+                <div class="rTableRow">
+                    <div class="rTableCell">
+                        <iron-image id="contain-img" src="../elements/piggy.png" style="width:25px; height:25px;
+           " sizing="contain"></iron-image>
+                    </div>
+                    <div class="rTableCell">
+                        <h3 style="margin-top: 35px">INVESTMENT</h3>
+                    </div>
+                </div>
+            </div>
+            <div class="rTable">
+                <div class="rTableRow">
+                    <div class="rTableCell">
+                        <hr>
+                    </div>
+                </div>
+            </div>
+            <div class="rTable">
+                <div class="rTableRow">
+                    <div class="rTableCell">
+                        <h3 style="margin: 0 0 0 10px">Spending</h3>
+                    </div>
+                    <div class="rTableCell" align="right">
+                        <select class="select_style">
+                            <option value="byDailySchedule">By Daily Schedule</option>
+                            <option value="byWeeklySchedule">By Weekly Schedule</option>
+                            <option value="byMonthlySchedule">By Monthly Schedule</option>
+                            <option value="byYearlySchedule">By Yearly Schedul</option>
+                        </select>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="container">
+            <div id="pieChart" style="width: 600px; height: 400px; ">
+            </div>
+        </div>
+    </template>
+    <script>
+    var donutChart;
+    Polymer({
+        is: "donut-chart",
+        handleResponse: function() {
+
+            donutChart = new Highcharts.Chart({
+                colors: ['#4d4d4d', '#88bde6', '#5da5da', '#265dab'],
+                chart: {
+                    renderTo: 'pieChart',
+                    type: 'pie'
+                },
+                credits: {
+                    enabled: false
+                },
+                exporting: {
+                    enabled: false
+                },
+                plotOptions: {
+                    pie: {
+                        borderColor: '#000000',
+                        innerSize: '60%',
+
+                    }
+                },
+                title: {
+                    text: ' ',
+                    align: 'left'
+                },
+
+                series: [
+
+                    {
+                        dataLabels: {
+
+                            distance: 60
+                        },
+                        groupPadding: 0,
+                        name: '',
+                        data: this.donutchartServiceResponse
+                    }
+                ]
+
+
+            });
+
+        },
+        attached: function() {
+            this.listen(document.querySelector('donut-chart-service'), 'donut-data-ready', 'handleResponse');
+        },
+
+    });
+    </script>
+</dom-module>
